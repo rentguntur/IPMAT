@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ram's IPMAT Learning Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --chalk-board:#1f3b2c;
+    --chalk-white:#f3f1e9;
+    --card:#fbf8f0;
+    --ink:#1c2418;
+    --quant:#3f8fd1;
+    --verbal:#e2664a;
+    --lr:#8a67c9;
+    --trick:#d99e2b;
+    --trick-soft:#fbf1dc;
+    --confusion:#c94f4f;
+    --confusion-soft:#fbe6e6;
+    --risk:#5a8a6b;
+    --risk-soft:#e6f0e9;
+    --qa:#2f6f8f;
+    --qa-soft:#e2eef2;
+    --learn:#2f6f5f;
+    --learn-soft:#e6f2ee;
+    --line:#e4ddc9;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--chalk-board);
+    background-image:
+      radial-gradient(circle at 10% 5%, rgba(255,255,255,0.03), transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(255,255,255,0.025), transparent 45%);
+    font-family:'Inter', sans-serif;
+    color:var(--ink);
+    line-height:1.6;
+  }
+  .wrap{max-width:780px; margin:0 auto; padding:48px 20px 100px;}
+
+  header.hero{color:var(--chalk-white); padding:10px 4px 36px;}
+  header.hero .kicker{font-family:'Caveat', cursive; font-size:1.5rem; color:#d9d3b8; margin:0 0 2px;}
+  header.hero h1{font-family:'Space Grotesk', sans-serif; font-size:2.6rem; line-height:1.08; margin:0 0 14px; font-weight:700; letter-spacing:-0.5px;}
+  header.hero p{max-width:560px; color:#cfd6c9; font-size:1.02rem; margin:0;}
+
+  .howto{background:var(--card); border-radius:14px; padding:22px 26px; margin-bottom:40px; box-shadow:0 10px 30px rgba(0,0,0,0.25);}
+  .howto h2{font-family:'Space Grotesk', sans-serif; font-size:1.1rem; margin:0 0 10px;}
+  .howto ol{margin:0; padding-left:20px;}
+  .howto li{margin-bottom:4px; font-size:0.96rem;}
+
+  nav.toc{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:44px;}
+  nav.toc a{text-decoration:none; font-family:'Space Grotesk', sans-serif; font-size:0.85rem; font-weight:600; color:var(--chalk-white); background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.18); padding:7px 14px; border-radius:999px;}
+  nav.toc a:hover{background:rgba(255,255,255,0.18);}
+
+  .chapter-band{border-radius:14px 14px 0 0; padding:20px 26px 16px; color:#fff;}
+  .chapter-band .num{font-family:'Caveat', cursive; font-size:1.3rem; opacity:0.85; display:block; margin-bottom:-4px;}
+  .chapter-band h2{font-family:'Space Grotesk', sans-serif; font-size:1.7rem; margin:0; font-weight:700;}
+  .quant-band{background:linear-gradient(135deg, var(--quant), #2b6ca3);}
+  .verbal-band{background:linear-gradient(135deg, var(--verbal), #b74630);}
+  .lr-band{background:linear-gradient(135deg, var(--lr), #61439b);}
+  .meta-band{background:linear-gradient(135deg, #4a5240, #2f3527);}
+
+  .chapter-body{background:var(--card); border-radius:0 0 14px 14px; padding:6px 26px 26px; margin-bottom:34px; box-shadow:0 10px 30px rgba(0,0,0,0.22);}
+
+  article.topic{padding:24px 0; border-bottom:1px dashed var(--line);}
+  article.topic:last-child{border-bottom:none;}
+  article.topic h3{font-family:'Space Grotesk', sans-serif; font-size:1.3rem; margin:0 0 12px;}
+  .quant h3{color:#25587e;} .verbal h3{color:#a3402a;} .lr h3{color:#5c4093;}
+
+  details.lesson{background:var(--learn-soft); border:1px solid #bcdbd0; border-radius:10px; padding:14px 16px; margin-bottom:12px;}
+  details.lesson summary{cursor:pointer; font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:0.98rem; color:var(--learn); list-style:none;}
+  details.lesson summary::-webkit-details-marker{display:none;}
+  details.lesson summary::before{content:"📘 "; }
+  details.lesson[open] summary{margin-bottom:10px;}
+  details.lesson p{margin:0 0 10px; font-size:0.96rem;}
+  details.lesson p:last-child{margin-bottom:0;}
+  details.lesson strong.formula{display:block; background:#fff; border-radius:8px; padding:8px 12px; margin:8px 0; font-family:'Space Grotesk', sans-serif; text-align:center; color:var(--learn);}
+
+  .block{border-radius:10px; padding:12px 16px; margin-bottom:10px; font-size:0.95rem;}
+  .block .tag{font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:0.78rem; display:inline-block; margin-bottom:5px; padding:2px 9px; border-radius:6px; color:#fff;}
+  .block p, .block table{margin:0;}
+  .concept{background:#eef1e9;} .concept .tag{background:#6b7a5c;}
+  .trick{background:var(--trick-soft);} .trick .tag{background:var(--trick);}
+  .confusion{background:var(--confusion-soft);} .confusion .tag{background:var(--confusion);}
+  .risk{background:var(--risk-soft);} .risk .tag{background:var(--risk);}
+
+  details.qa{background:var(--qa-soft); border-radius:10px; padding:12px 16px; border:1px solid #c7dbe3;}
+  details.qa summary{cursor:pointer; font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:0.95rem; color:var(--qa); list-style:none;}
+  details.qa summary::-webkit-details-marker{display:none;}
+  details.qa summary::before{content:"▸ "; color:var(--qa);}
+  details.qa[open] summary::before{content:"▾ ";}
+  details.qa .q-text{color:var(--ink); font-weight:400; margin-left:4px;}
+  details.qa .answer{margin-top:10px; padding-top:10px; border-top:1px dashed #b7cdd6; font-size:0.93rem;}
+
+  table.freqtable{width:100%; border-collapse:collapse; font-size:0.9rem;}
+  table.freqtable td{padding:3px 8px; border-bottom:1px solid #e0dcc9;}
+
+  .recap{background:var(--card); border-radius:14px; padding:24px 28px; box-shadow:0 10px 30px rgba(0,0,0,0.22);}
+  .recap h3{font-family:'Space Grotesk', sans-serif; margin-top:0;}
+  .recap ul{padding-left:20px;} .recap li{margin-bottom:6px;}
+
+  .order-list{counter-reset:step;}
+  .order-list li{list-style:none; position:relative; padding-left:34px; margin-bottom:10px;}
+  .order-list li::before{counter-increment:step; content:counter(step); position:absolute; left:0; top:0; width:24px; height:24px; background:var(--lr); color:#fff; border-radius:50%; font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:0.8rem; display:flex; align-items:center; justify-content:center;}
+
+  footer{text-align:center; color:#a9b3a0; font-family:'Caveat', cursive; font-size:1.2rem; margin-top:30px;}
+
+  @media (max-width:600px){ header.hero h1{font-size:2rem;} .wrap{padding:32px 14px 80px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="kicker">Ram's own prep space</p>
+    <h1>The IPMAT Learning Hub</h1>
+    <p>Not just a formula sheet — every topic starts with a full "understand it" lesson (open the 📘 box), then gives you the fast trick, the common confusion, the fix, and a question to test yourself with the answer hidden.</p>
+  </header>
+
+  <div class="howto">
+    <h2>How to work through this</h2>
+    <ol>
+      <li>Open the 📘 lesson box first and actually read it — this is where understanding happens.</li>
+      <li>Then read the trick — it's how you apply the concept fast, once you already get it.</li>
+      <li>Read the confusion — this is where marks get lost even by people who understand the concept.</li>
+      <li>Note the fix, so the mistake doesn't repeat.</li>
+      <li>Try the question cold, then tap it open to check.</li>
+    </ol>
+  </div>
+
+  <nav class="toc">
+    <a href="#quant">Quant</a>
+    <a href="#verbal">Verbal</a>
+    <a href="#lr">Logical reasoning</a>
+    <a href="#strategy">Exam-day strategy</a>
+  </nav>
+
+  <!-- ===================== QUANT ===================== -->
+  <section class="chapter" id="quant">
+    <div class="chapter-band quant-band"><span class="num">Section one</span><h2>Quantitative ability</h2></div>
+    <div class="chapter-body">
+
+      <article class="topic quant">
+        <h3>Percentages</h3>
+        <details class="lesson">
+          <summary>Understand it: what a percentage actually is</summary>
+          <p>"Percent" means "per hundred." 25% just means 25 out of every 100 — it's a ratio put on a common scale so different things become comparable. "45 out of 60" is hard to compare to "38 out of 50" until you convert both to percentages (75% and 76%) — now they're on the same scale.</p>
+          <strong class="formula">x% of y = (x/100) × y</strong>
+          <p>Every percentage question is really just this one relationship (part, whole, percentage) viewed from a different angle: find the percentage, find the part, or find the whole. Same equation, different unknown.</p>
+          <p><strong>Percentage change</strong> is different from "percentage of" — it asks how much something grew or shrank relative to where it started:</p>
+          <strong class="formula">% change = (New − Old) / Old × 100</strong>
+          <p>The denominator is always the ORIGINAL value — never the new one. This is where marks get lost, because using the wrong base "feels" fine when you're moving fast.</p>
+          <p><strong>Why "up 50%, down 50%" isn't back to zero:</strong> ₹100 up 50% → ₹150. Now ₹150 down 50% → you lose 50% of 150, which is 75, leaving ₹75 — not ₹100. The second move was calculated on a bigger pile than the first, so it doesn't cancel out. This is why any "up X%, down X%" sequence always ends in a net loss.</p>
+          <p>You can get this net effect in one line instead of two steps:</p>
+          <strong class="formula">Net % change = a + b + (ab/100)</strong>
+          <p>Check: a=+50, b=−50 → 50 − 50 + (50×−50)/100 = 0 − 25 = −25%. ₹100 at −25% = ₹75. Matches.</p>
+        </details>
+        <div class="block trick"><span class="tag">Trick</span>
+          <p>Memorize these fraction equivalents cold, don't calculate them:</p>
+          <table class="freqtable">
+            <tr><td>1/2 = 50%</td><td>1/7 ≈ 14.28%</td></tr>
+            <tr><td>1/3 = 33.33%</td><td>1/8 = 12.5%</td></tr>
+            <tr><td>1/4 = 25%</td><td>1/9 = 11.11%</td></tr>
+            <tr><td>1/5 = 20%</td><td>1/11 ≈ 9.09%</td></tr>
+            <tr><td>1/6 ≈ 16.67%</td><td>1/12 ≈ 8.33%</td></tr>
+          </table>
+        </div>
+        <div class="block confusion"><span class="tag">Confusion</span><p>A 50% increase followed by a 50% decrease does <em>not</em> return you to the original — net is −25%, because the base changed between steps.</p></div>
+        <div class="block risk"><span class="tag">Fix</span><p>Say "% change = (New − Old)/Old" in your head before plugging in numbers, until it's automatic.</p></div>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">A number is increased by 25%, then decreased by 20%. Net % change?</span></summary>
+          <div class="answer">25 − 20 + (25×−20)/100 = 5 − 5 = <strong>0%</strong>. Worth memorizing as a recurring shape in DI sets.</div>
+        </details>
+      </article>
+
+      <article class="topic quant">
+        <h3>Profit, loss &amp; discount</h3>
+        <details class="lesson">
+          <summary>Understand it: why the multiplier method works</summary>
+          <p>Profit% is always measured against Cost Price: Profit% = (SP−CP)/CP × 100. Discount, on the other hand, is always applied to the Marked Price, not the cost price — MP is the "sticker price" before any discount, and SP is what's actually paid after discount.</p>
+          <p>Here's the intuition for combining multiple percentage moves: instead of tracking rupee amounts through each step, track the <em>multiplying factor</em>. A 40% markup means the price is multiplied by 1.40. A 25% discount means what's left is multiplied by 0.75 (you keep 75%, not lose 75%). Since these are sequential operations on the same starting value, you just multiply the factors: 1.40 × 0.75 = 1.05, meaning the final price is 105% of the original cost — a 5% profit. No need to compute intermediate MP or discount amounts at all.</p>
+        </details>
+        <div class="block confusion"><span class="tag">Confusion</span><p>"SP is 20% more than CP" and "CP is 20% less than SP" sound reversible but are <em>not</em> the same statement mathematically.</p></div>
+        <div class="block risk"><span class="tag">Fix</span><p>Fix CP = 100 whenever only percentages are given, and derive every other value as an actual number from there.</p></div>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">Marked 40% above cost, 25% discount given. Profit or loss %?</span></summary>
+          <div class="answer">1.40 × 0.75 = 1.05 → <strong>5% profit</strong>.</div>
+        </details>
+      </article>
+
+      <article class="topic quant">
+        <h3>Averages, mixtures &amp; alligation</h3>
+        <details class="lesson">
+          <summary>Understand it: what alligation is really doing</summary>
+          <p>A simple average treats all items equally. But when you mix unequal quantities of two things (say, cheap rice and expensive rice), the resulting average price leans toward whichever quantity is <em>bigger</em>. Alligation is a shortcut that captures this "leaning" directly from the numbers, without setting up algebra.</p>
+          <strong class="formula">Ratio of quantities = (b − m) : (m − a)</strong>
+          <p>Here a and b are the two prices, m is the mixture average. Notice the ratio pairs the <em>cheaper</em> item's quantity with the gap on the <em>expensive</em> side (b − m) — because the closer the average sits to a price, the <em>more</em> of that item must be in the mix. A bigger gap on one side means more weight is needed on the corresponding item to pull the average that far.</p>
+          <p>This only works for a single, one-time mix. If something is repeatedly diluted or replaced (like replacing part of a solution with water, again and again), you need a different, exponential formula instead — because each repetition acts on an already-changed mixture, not the original.</p>
+        </details>
+        <div class="block risk"><span class="tag">Fix</span><p>Before reaching for alligation, check: one-time mix, or repeated replacement? Pick the matching tool.</p></div>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">Mix ₹40/kg rice with ₹60/kg rice to get ₹52/kg. Ratio?</span></summary>
+          <div class="answer">(60−52):(52−40) = 8:12 = <strong>2:3</strong> (cheaper:dearer). Check: (2×40+3×60)/5 = 52 ✓</div>
+        </details>
+      </article>
+
+      <article class="topic quant">
+        <h3>Ratio, proportion &amp; partnership</h3>
+        <details class="lesson">
+          <summary>Understand it: why time matters as much as money</summary>
+          <p>A partnership isn't just about how much money each partner put in — it's about how much "capital-time" each partner contributed, because ₹10,000 invested for 12 months has done twice the work of ₹10,000 invested for only 6 months. That's why profit splits according to (capital × time), not capital alone. Think of it like renting out money: the longer it's "working" in the business, the bigger the share it earns.</p>
+        </details>
+        <div class="block confusion"><span class="tag">Confusion</span><p>Forgetting to multiply by time when partners invest for different durations — comparing raw capital instead.</p></div>
+        <div class="block risk"><span class="tag">Fix</span><p>Write a quick "Capital × Months" table before computing any partnership ratio, every time.</p></div>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">A invests ₹5000 for 12 months, B ₹6000 for 8 months. Profit ratio?</span></summary>
+          <div class="answer">A: 5000×12=60,000. B: 6000×8=48,000. Ratio = <strong>5:4</strong>.</div>
+        </details>
+      </article>
+
+      <article class="topic quant">
+        <h3>Time, speed &amp; distance</h3>
+        <details class="lesson">
+          <summary>Understand it: relative speed and the train-length trick</summary>
+          <p>When two things move, what matters for "closing the gap" between them is their <em>relative</em> speed — how fast the distance between them is changing. If they move toward each other, their speeds add (both are closing the gap). If they move the same direction, one speed is subtracted from the other (only the speed difference closes the gap).</p>
+          <p>For a train crossing something, picture the front of the train as a single dot. That dot must travel from the start of the object to its end — plus the entire length of the train itself has to clear the object too. So total distance = train length + object length (which is 0 for a pole, since a pole has no length of its own).</p>
+        </details>
+        <div class="block trick"><span class="tag">Trick</span><p>km/h → m/s: ×5/18. m/s → km/h: ×18/5.</p></div>
+        <div class="block risk"><span class="tag">Fix</span><p>For every train question, ask "what total distance does the front of the train travel?" before computing.</p></div>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">150m train crosses a 250m platform in 20s. Speed in km/h?</span></summary>
+          <div class="answer">Distance = 400m. Speed = 400/20 = 20 m/s → 20×18/5 = <strong>72 km/h</strong>.</div>
+        </details>
+      </article>
+
+      <article class="topic quant">
+        <h3>Time &amp; work</h3>
+        <details class="lesson">
+          <summary>Understand it: why we use rates, not days</summary>
+          <p>Days-to-finish and "amount of work per day" are inverses of each other. If A finishes a job in 12 days, A completes 1/12 of the job every day — that's A's rate. Rates ADD when people work together (their combined daily output is the sum of individual outputs), but the number of DAYS does not add or average in any simple way. That's why every time-and-work problem should be converted to rates first.</p>
+          <p>The LCM trick is just a convenience: instead of saying "the whole job = 1," say "the whole job = 36 units" (the LCM of the given day-counts). Now everyone's daily rate is a whole number of units, not an awkward fraction — same math, easier arithmetic.</p>
+        </details>
+        <div class="block confusion"><span class="tag">Confusion</span><p>"Twice as efficient" means <em>half</em> the time, not double — efficiency and time move in opposite directions.</p></div>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">A: 12 days, B: 18 days. Work together 4 days, then A leaves. Days left for B?</span></summary>
+          <div class="answer">LCM=36. A's rate=3/day, B's rate=2/day, combined=5/day. 4 days → 20 units done, 16 remain. B alone: 16/2 = <strong>8 more days</strong>.</div>
+        </details>
+      </article>
+
+      <article class="topic quant">
+        <h3>Simple &amp; compound interest</h3>
+        <details class="lesson">
+          <summary>Understand it: why compound interest grows faster</summary>
+          <p>Simple interest is calculated on the original principal every single time — the interest itself never earns more interest. Compound interest, though, adds each period's interest back into the principal, so the next period's interest is calculated on a slightly bigger amount. That "interest on interest" is exactly what makes CI grow faster than SI, and the gap between them widens over time.</p>
+          <p>For exactly 2 years, that extra "interest on interest" amount happens to equal P×(R/100)² — a neat shortcut derived directly from expanding the compound interest formula, so you don't need to calculate the full CI when only the difference is asked.</p>
+        </details>
+        <div class="block confusion"><span class="tag">Confusion</span><p>"Compounded half-yearly" means double T and halve R before applying the formula.</p></div>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">CI − SI on ₹8000 for 2 years at 5% p.a.?</span></summary>
+          <div class="answer">8000 × (5/100)² = 8000 × 0.0025 = <strong>₹20</strong>.</div>
+        </details>
+      </article>
+
+      <article class="topic quant">
+        <h3>Number system</h3>
+        <details class="lesson">
+          <summary>Understand it: why unit digits repeat in cycles</summary>
+          <p>When you multiply a number repeatedly, only the unit digit of the previous result affects the unit digit of the next one (e.g., ...3 × anything only depends on that 3, not the rest of the number). Because there are only 10 possible unit digits, the pattern of unit digits as you raise a number to higher and higher powers MUST eventually repeat — and for digits like 2, 3, 7, 8 that cycle repeats every 4 powers. Once you know the cycle, you don't need to compute the actual (huge) power — you only need to know where in the 4-step cycle your exponent lands.</p>
+        </details>
+        <div class="block trick"><span class="tag">Trick</span><p>Find exponent mod (cycle length), use 4 instead of remainder 0, then read off the cycle position.</p></div>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">Unit digit of 7⁸⁵?</span></summary>
+          <div class="answer">Cycle of 7: 7,9,3,1 (length 4). 85 mod 4 = 1 → position 1 = <strong>7</strong>.</div>
+        </details>
+      </article>
+
+      <article class="topic quant">
+        <h3>Algebra &amp; quadratics</h3>
+        <details class="lesson">
+          <summary>Understand it: where sum and product of roots come from</summary>
+          <p>If a quadratic ax²+bx+c=0 has roots p and q, then it can be written as a(x−p)(x−q) = 0. Expanding that gives ax² − a(p+q)x + apq = 0. Comparing this to the original ax²+bx+c, you can match up coefficients: −a(p+q) = b, so p+q = −b/a, and apq = c, so pq = c/a. These aren't arbitrary rules to memorize — they fall directly out of expanding the factored form, which is why they always hold for any quadratic.</p>
+        </details>
+        <div class="block trick"><span class="tag">Trick</span><p>Try factoring first before reaching for the quadratic formula — it's faster whenever the numbers are clean.</p></div>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">Roots of x²−7x+k=0 are in ratio 2:5. Find k.</span></summary>
+          <div class="answer">Roots = 2t, 5t. Sum = 7t = 7 → t=1. Roots = 2, 5. k = product = <strong>10</strong>.</div>
+        </details>
+      </article>
+
+      <article class="topic quant">
+        <h3>Geometry &amp; mensuration</h3>
+        <details class="lesson">
+          <summary>Understand it: why area scales by k² and volume by k³</summary>
+          <p>Area is built from two lengths multiplied together (like base × height), so if every length in a shape scales by k, the area — a product of two such lengths — scales by k × k = k². Volume is built from three lengths multiplied together, so it scales by k × k × k = k³. This is a general geometric fact, not specific to any one shape — it's why doubling a sphere's radius multiplies its volume by 8, not 2.</p>
+        </details>
+        <div class="block confusion"><span class="tag">Confusion</span><p>Cone surface area uses <em>slant</em> height; cone volume uses <em>vertical</em> height — easy to mix up.</p></div>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">Sphere radius is doubled. Volume increases by what factor?</span></summary>
+          <div class="answer">Volume ∝ r³. Doubling r → <strong>8×</strong> the volume.</div>
+        </details>
+      </article>
+
+      <article class="topic quant">
+        <h3>Data interpretation</h3>
+        <details class="lesson">
+          <summary>Understand it: DI is a reading-speed test wearing a math costume</summary>
+          <p>The actual arithmetic in most DI questions is simple — the real bottleneck is finding the right numbers in a dense table or chart fast. That's why reading the question BEFORE looking at the data pays off: you scan with a specific target in mind ("I need the March figure for Region B") instead of trying to absorb the entire dataset, most of which you'll never use.</p>
+        </details>
+        <div class="block risk"><span class="tag">Fix</span><p>Set a hard time cap per DI set (5–6 minutes); if it isn't yielding answers, mark it and move on.</p></div>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">Pie chart: Marketing = 25% of a ₹12,00,000 budget. Marketing budget?</span></summary>
+          <div class="answer">25% = 1/4. 12,00,000/4 = <strong>₹3,00,000</strong>.</div>
+        </details>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===================== VERBAL ===================== -->
+  <section class="chapter" id="verbal">
+    <div class="chapter-band verbal-band"><span class="num">Section two</span><h2>Verbal ability</h2></div>
+    <div class="chapter-body">
+
+      <article class="topic verbal">
+        <h3>Reading comprehension</h3>
+        <details class="lesson">
+          <summary>Understand it: why "questions first" actually works</summary>
+          <p>RC isn't testing whether you enjoyed the passage — it's testing whether you can locate and interpret specific information quickly. If you read the whole passage first without knowing what you'll be asked, you absorb a lot of detail you won't need and forget details you will. Reading the questions first turns your passage-reading into a targeted search, which is both faster and more accurate.</p>
+        </details>
+        <div class="block confusion"><span class="tag">Confusion</span><p>Options that are factually true but never actually stated in the passage (out-of-scope trap).</p></div>
+        <div class="block risk"><span class="tag">Fix</span><p>For every option ask "can I point to the exact line that supports this?" If not, eliminate it.</p></div>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">"Although the committee approved the budget unanimously, several members privately expressed reservations." What can be inferred?</span></summary>
+          <div class="answer">Public agreement didn't fully reflect private opinion. Traps: "was rejected" (not stated), "opposed it publicly" (contradicts "unanimously").</div>
+        </details>
+      </article>
+
+      <article class="topic verbal">
+        <h3>Para-jumbles</h3>
+        <details class="lesson">
+          <summary>Understand it: why mandatory pairs are the key</summary>
+          <p>A paragraph has internal logic — sentences reference each other through pronouns ("this," "it," "they") and connectors ("however," "therefore"). A sentence that starts with "This" is grammatically dependent on something mentioned before it, so it can never be the opening sentence, and it must sit right after whatever it's referring to. Finding these dependencies (mandatory pairs) narrows the possible orderings far faster than trying to "feel out" the right sequence from scratch.</p>
+        </details>
+        <div class="block risk"><span class="tag">Fix</span><p>Use the answer options to eliminate — check which options are structurally impossible first, rather than building the paragraph blind.</p></div>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">(1) This led to a decline in local employment. (2) The factory closed in 2010 due to rising costs. (3) Workers had to migrate to nearby cities. (4) Government subsidies failed to revive it. Order?</span></summary>
+          <div class="answer"><strong>2-4-1-3.</strong> Sentence 1 starts with "This" → can't be the opener. 2 introduces the closure, 4 extends it, 1 states the consequence, 3 follows as the further effect.</div>
+        </details>
+      </article>
+
+      <article class="topic verbal">
+        <h3>Vocabulary</h3>
+        <details class="lesson">
+          <summary>Understand it: why roots beat memorized word lists</summary>
+          <p>Most English vocabulary is built from a fairly small set of Latin and Greek roots. Learning that "bene-" means good and "mal-" means bad doesn't just teach you two words — it gives you a decoding tool for dozens of unfamiliar words you'll meet for the first time in the exam (benevolent, malevolent, malfunction, benefactor). This is a far better use of memory than memorizing isolated word-meaning pairs.</p>
+        </details>
+        <div class="block risk"><span class="tag">Fix</span><p>Check the connotation of the original word (positive/negative/neutral) first, and eliminate any option with a mismatched connotation.</p></div>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">PRODIGAL is to WASTEFUL as FRUGAL is to ______?</span></summary>
+          <div class="answer"><strong>Thrifty</strong> — the relationship is a synonym pair, applied to the second word.</div>
+        </details>
+      </article>
+
+      <article class="topic verbal">
+        <h3>Grammar &amp; sentence correction</h3>
+        <details class="lesson">
+          <summary>Understand it: why the subject can hide from you</summary>
+          <p>Subject-verb agreement depends only on the TRUE subject of the sentence — but English often places extra descriptive phrases between the subject and the verb, and those phrases can contain a noun that "sounds" like the subject even though it isn't. In "Each of the students have submitted," the true subject is "Each" (singular), while "students" is just part of a prepositional phrase describing which "each." Reading quickly, your ear locks onto the nearest noun ("students") instead of the real subject.</p>
+        </details>
+        <div class="block risk"><span class="tag">Fix</span><p>Physically cross out prepositional phrases before checking subject-verb agreement.</p></div>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">Find the error: "Each of the students have submitted their assignment."</span></summary>
+          <div class="answer">"Have" should be "has" — subject is "Each" (singular).</div>
+        </details>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===================== LOGICAL REASONING ===================== -->
+  <section class="chapter" id="lr">
+    <div class="chapter-band lr-band"><span class="num">Section three</span><h2>Logical reasoning</h2></div>
+    <div class="chapter-body">
+
+      <article class="topic lr">
+        <h3>Seating arrangement &amp; puzzles</h3>
+        <details class="lesson">
+          <summary>Understand it: why the most restrictive clue goes first</summary>
+          <p>Every clue eliminates some fraction of possible arrangements. A vague clue ("X is somewhere left of Y") eliminates relatively few possibilities, while a precise clue ("X sits exactly between Y and Z") pins things down immediately. If you process vague clues first, you often build a partial picture that later gets contradicted, forcing a restart. Starting with the most restrictive clue avoids most of that backtracking.</p>
+        </details>
+        <div class="block confusion"><span class="tag">Confusion</span><p>In circular arrangements, "left" and "right" flip depending on whether people face in or out.</p></div>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">5 in a row: A immediately left of B; C at an end; D exactly in the middle. Where can E sit?</span></summary>
+          <div class="answer">D=3 (middle). C=1 or 5. If C=1, remaining seats 2,4,5 for A,B,E — the A-B block only fits at 4,5. So A=4, B=5, and <strong>E=2</strong>.</div>
+        </details>
+      </article>
+
+      <article class="topic lr">
+        <h3>Blood relations</h3>
+        <details class="lesson">
+          <summary>Understand it: why drawing beats holding it in your head</summary>
+          <p>Relationship chains ("my grandfather's only son's daughter") stack multiple hops, and each hop is easy to lose track of mentally. A quick family tree externalizes that stacking — you're no longer relying on working memory to hold three or four relationship links at once, just reading them off a drawing.</p>
+        </details>
+        <div class="block risk"><span class="tag">Fix</span><p>Mark gender-unknown people with a "?" until a clue explicitly confirms it.</p></div>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">"She is the daughter of my grandfather's only son." How is she related to Ravi (male)?</span></summary>
+          <div class="answer">Grandfather's only son = Ravi's father. Her being his daughter makes her <strong>Ravi's sister</strong>.</div>
+        </details>
+      </article>
+
+      <article class="topic lr">
+        <h3>Syllogisms</h3>
+        <details class="lesson">
+          <summary>Understand it: "necessarily true" versus "commonly true"</summary>
+          <p>Syllogisms test pure logical validity, not real-world likelihood. A conclusion is valid only if it holds in EVERY possible arrangement consistent with the given statements — not just the most "obvious" or common one. Drawing every possible Venn diagram configuration (not just the first one you imagine) is what reveals whether a conclusion truly always follows, or just often seems to.</p>
+        </details>
+        <div class="block confusion"><span class="tag">Confusion</span><p>"Some A are B" does not imply "Some A are not B." "All A are B" does not reverse to "All B are A."</p></div>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">All cats are animals. Some animals are dogs. → Some cats are dogs. Valid?</span></summary>
+          <div class="answer"><strong>Invalid.</strong> There's a valid diagram where the dog-circle never touches the cat-circle.</div>
+        </details>
+      </article>
+
+      <article class="topic lr">
+        <h3>Coding-decoding</h3>
+        <details class="lesson">
+          <summary>Understand it: codes are just consistent functions</summary>
+          <p>A coding rule is a fixed transformation applied to every letter the same way (shift by a fixed number, reverse the alphabet, etc). Once you identify that rule from an example, applying it to a new word is pure mechanical substitution — the "puzzle" part is only in figuring out the rule, not in applying it.</p>
+        </details>
+        <div class="block risk"><span class="tag">Fix</span><p>Test your hypothesized rule against every given letter in the example before applying it to a new word.</p></div>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">CAT → DBU. How is DOG coded?</span></summary>
+          <div class="answer">Rule: each letter +1. D→E, O→P, G→H → <strong>EPH</strong>.</div>
+        </details>
+      </article>
+
+      <article class="topic lr">
+        <h3>Number &amp; letter series</h3>
+        <details class="lesson">
+          <summary>Understand it: patterns have a small number of "shapes"</summary>
+          <p>Almost all series questions fall into a handful of underlying patterns: constant difference, constant ratio, a difference-of-differences (second-order pattern), two interleaved sequences, or squares/cubes with an offset. Checking these in a fixed order — rather than guessing randomly — turns pattern recognition into a systematic search instead of a lucky guess.</p>
+        </details>
+        <details class="qa">
+          <summary>Try it — <span class="q-text">2, 3, 5, 8, 13, ___</span></summary>
+          <div class="answer">Each term = sum of previous two. 8+13 = <strong>21</strong>.</div>
+        </details>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===================== STRATEGY ===================== -->
+  <section class="chapter" id="strategy">
+    <div class="chapter-band meta-band"><span class="num">Section four</span><h2>Exam-day strategy</h2></div>
+    <div class="chapter-body">
+      <article class="topic" style="border-bottom:none;">
+        <div class="block risk"><span class="tag">Triage rule</span><p>First pass: attempt only what you can solve in under 60 seconds. Mark everything else for a second pass.</p></div>
+        <div class="block confusion"><span class="tag">90-second rule</span><p>If a question crosses 90 seconds with no clear path, abandon it — one hard question can cost you 2–3 easy ones elsewhere.</p></div>
+        <div class="block trick"><span class="tag">Negative marking</span><p>Only guess after eliminating at least 2 of 4 options — random full guesses are negative expected value under most schemes.</p></div>
+
+        <h3 style="margin-top:22px;">Order of attack</h3>
+        <ol class="order-list">
+          <li>Arithmetic-based quant (percentages, P&amp;L, averages, SI/CI) — fastest, highest accuracy.</li>
+          <li>Verbal — vocabulary and grammar (quick, low ambiguity).</li>
+          <li>Logical reasoning — coding-decoding, series (fast pattern recognition).</li>
+          <li>RC and para-jumbles (time-intensive but high question payoff).</li>
+          <li>Puzzles, seating arrangements, and DI sets last — highest time risk.</li>
+        </ol>
+      </article>
+
+      <div class="recap">
+        <h3>The silly-mistake recap — reread this 10 minutes before the exam</h3>
+        <ul>
+          <li>% change base is always the <strong>old</strong> value.</li>
+          <li>Discount % is on Marked Price; Profit % is on Cost Price.</li>
+          <li>Efficiency and time are inversely related.</li>
+          <li>Compounding frequency changes both R and T.</li>
+          <li>"Some" never implies "Some are not" in syllogisms.</li>
+          <li>Circular seating left/right depends on facing direction.</li>
+          <li>Cone slant height ≠ vertical height.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>built topic by topic, for the version of you sitting the actual exam</footer>
+
+</div>
+</body>
+</html>

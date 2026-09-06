@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Time & Work — Ram's IPMAT Learning Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="topnav">
+  <a class="brand" href="index.html">Ram's IPMAT Learning Hub</a>
+  <span class="crumbs"><a href="index.html">Home</a> &rsaquo; Time & Work</span>
+</div>
+
+<div class="wrap">
+  <div class="chapter-band quant-band">
+    <span class="num">Section one</span>
+    <h1>Time & Work</h1>
+  </div>
+  <div class="chapter-body">
+
+    <h2>Understand it</h2>
+    <details class="lesson" open>
+      <summary>The concept, explained properly</summary>
+      <p>Days-to-finish and &ldquo;work per day&rdquo; are inverses. If A finishes in 12 days, A completes 1/12 of the job daily &mdash; that's A's rate. Rates ADD when people work together; days do not add or average simply. Always convert to rates first.</p>
+          <p>The LCM trick: instead of &ldquo;whole job = 1,&rdquo; say &ldquo;whole job = 36 units&rdquo; (LCM of the given day-counts). Now every rate is a whole number &mdash; same math, easier arithmetic.</p>
+    </details>
+
+    <h2>The fast way</h2>
+    <div class="block trick"><span class="tag">Trick</span><p>Assume total work = LCM of all given day-counts, turning fractional rates into clean integers.</p></div>
+    <div class="block confusion"><span class="tag">Confusion</span><p>&ldquo;Twice as efficient&rdquo; means half the time, not double &mdash; efficiency and time move in opposite directions.</p></div>
+    <div class="block risk"><span class="tag">Fix</span><p>Always convert to rate (work/day) before combining people. Never add raw day-counts.</p></div>
+
+    <h2>Worked examples</h2>
+    <div class="worked">
+          <span class="tag">Worked example &mdash; Easy</span>
+          <p>A: 12 days, B: 18 days. They work together 4 days, then A leaves. Days left for B?</p>
+          <p>LCM=36. A's rate=3/day, B's rate=2/day, combined=5/day. In 4 days: 20 units done, 16 remain. B alone: 16/2 = <strong>8 more days</strong>.</p>
+        </div>
+
+    <h2>Now you try &mdash; answers hidden</h2>
+    <details class="qa">
+          <summary><span class="q-text">A can do a job in 10 days, B in 15 days. How long will they take together?</span></summary>
+          <div class="answer">LCM=30. A=3/day, B=2/day, combined=5/day. Time = 30/5 = <strong>6 days</strong>.</div>
+        </details>
+        <details class="qa">
+          <summary><span class="q-text">A is twice as efficient as B. Together they finish a job in 12 days. How long would A alone take?</span></summary>
+          <div class="answer">If B's rate = r, A's rate = 2r. Combined = 3r = 1/12 &rarr; r=1/36. A's rate = 2/36=1/18 &rarr; A alone takes <strong>18 days</strong>.</div>
+        </details>
+
+  </div>
+
+  <div class="pagenav">
+    <a href="time-speed-distance.html">&larr; Previous</a>
+    <a href="index.html">All topics</a>
+    <a href="si-ci.html">Next &rarr;</a>
+  </div>
+
+<footer>one concept at a time, until it is automatic</footer>
+</div>
+</body>
+</html>

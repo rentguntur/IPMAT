@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profit, Loss & Discount — Ram's IPMAT Learning Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="topnav">
+  <a class="brand" href="index.html">Ram's IPMAT Learning Hub</a>
+  <span class="crumbs"><a href="index.html">Home</a> &rsaquo; Profit, Loss & Discount</span>
+</div>
+
+<div class="wrap">
+  <div class="chapter-band quant-band">
+    <span class="num">Section one</span>
+    <h1>Profit, Loss & Discount</h1>
+  </div>
+  <div class="chapter-body">
+
+    <h2>Understand it</h2>
+    <details class="lesson" open>
+      <summary>The concept, explained properly</summary>
+      <p>Three quantities matter: <strong>CP</strong> (cost price &mdash; what the seller paid), <strong>MP</strong> (marked price &mdash; the sticker price before discount), and <strong>SP</strong> (selling price &mdash; what's actually paid).</p>
+          <p>Two rules almost every mistake in this topic comes from breaking: Profit% or Loss% is always calculated on CP. Discount% is always calculated on MP, never CP.</p>
+          <strong class="formula">Profit% = (SP &minus; CP)/CP &times; 100</strong>
+          <strong class="formula">SP = MP &minus; Discount</strong>
+          <p><strong>The technique that makes this fast:</strong> track the multiplying factor instead of rupees. &ldquo;Marked up 40%&rdquo; &rarr; &times;1.40. &ldquo;20% discount&rdquo; &rarr; &times;0.80 (you keep 80%). If two or more % moves happen on the same base value one after another, multiply the factors together &mdash; you never need MP or SP as actual numbers unless the question asks for a rupee amount.</p>
+    </details>
+
+    <h2>The fast way</h2>
+    <div class="block trick"><span class="tag">Trick</span><p>For successive discounts, multiply the retained fractions (not the discounts): 20% then 10% discount &rarr; 0.80&times;0.90=0.72 retained &rarr; single equivalent discount is 28%, not 30%.</p></div>
+    <div class="block confusion"><span class="tag">Confusion</span><p>&ldquo;SP is 20% more than CP&rdquo; and &ldquo;CP is 20% less than SP&rdquo; sound reversible but are <em>not</em> the same statement mathematically &mdash; the base is different in each.</p></div>
+    <div class="block risk"><span class="tag">Fix</span><p>Fix CP = 100 whenever only percentages are given, and derive every other value as an actual number from there.</p></div>
+
+    <h2>Worked examples</h2>
+    <div class="worked">
+          <span class="tag">Worked example &mdash; Easy</span>
+          <p>A trader marks goods 25% above cost and gives a 10% discount. Find his profit %.</p>
+          <p>Multiplier: 1.25 &times; 0.90 = <strong>1.125 &rarr; 12.5% profit</strong>. No need to compute CP, MP, SP as rupees &mdash; the multiplier gives the % directly.</p>
+        </div>
+        <div class="worked">
+          <span class="tag">Worked example &mdash; Medium &mdash; the reverse trap</span>
+          <p>A shopkeeper sells an article at a 20% loss. Had he sold it for &#8377;100 more, he'd have made a 5% profit. Find CP.</p>
+          <p>SP at loss = 0.80&times;CP. SP at profit = 1.05&times;CP. Difference = &#8377;100.<br>1.05CP &minus; 0.80CP = 100 &rarr; 0.25CP = 100 &rarr; <strong>CP = &#8377;400</strong>.<br>The moment you see two SP scenarios tied to one CP with a stated rupee difference, set up the subtraction algebraically first &mdash; don't compute each SP separately.</p>
+        </div>
+        <div class="worked">
+          <span class="tag">Worked example &mdash; Exam favorite &mdash; successive discounts</span>
+          <p>Find the single equivalent discount for successive discounts of 20% and 10%.</p>
+          <p>Multiplier: 0.80 &times; 0.90 = 0.72 retained &rarr; discount = <strong>28%</strong>. Trap: adding 20+10=30% is wrong &mdash; the second discount applies to an already-reduced price.</p>
+        </div>
+        <div class="worked">
+          <span class="tag">Worked example &mdash; False weight (disguised profit%)</span>
+          <p>A trader claims to sell at cost price but uses an 800g weight instead of 1kg. Find his profit %.</p>
+          <p>Profit% = (True &minus; False)/False &times; 100 = (1000&minus;800)/800 &times; 100 = <strong>25%</strong>. False weight acts like CP (what's actually given), true weight acts like the claimed value (what's charged for).</p>
+        </div>
+
+    <h2>Now you try &mdash; answers hidden</h2>
+    <details class="qa">
+          <summary><span class="q-text">A man buys an item for &#8377;500 and sells it at a 15% profit. Find the SP.</span></summary>
+          <div class="answer">SP = 500 &times; 1.15 = <strong>&#8377;575</strong>.</div>
+        </details>
+        <details class="qa">
+          <summary><span class="q-text">A shopkeeper marks goods 50% above cost but allows a 20% discount for cash. Find his profit %.</span></summary>
+          <div class="answer">Multiplier: 1.50 &times; 0.80 = 1.20 &rarr; <strong>20% profit</strong>.</div>
+        </details>
+        <details class="qa">
+          <summary><span class="q-text">Two successive discounts of 10% and 15% are given on a &#8377;800 marked price, and the trader still makes 8% profit. Find the CP.</span></summary>
+          <div class="answer">SP = 800 &times; 0.90 &times; 0.85 = &#8377;612. Profit 8% means SP = 1.08&times;CP &rarr; CP = 612/1.08 = <strong>&#8377;566.67</strong>.</div>
+        </details>
+
+  </div>
+
+  <div class="pagenav">
+    <a href="percentages.html">&larr; Previous</a>
+    <a href="index.html">All topics</a>
+    <a href="averages-alligation.html">Next &rarr;</a>
+  </div>
+
+<footer>one concept at a time, until it is automatic</footer>
+</div>
+</body>
+</html>

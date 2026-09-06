@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Number System — Ram's IPMAT Learning Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="topnav">
+  <a class="brand" href="index.html">Ram's IPMAT Learning Hub</a>
+  <span class="crumbs"><a href="index.html">Home</a> &rsaquo; Number System</span>
+</div>
+
+<div class="wrap">
+  <div class="chapter-band quant-band">
+    <span class="num">Section one</span>
+    <h1>Number System</h1>
+  </div>
+  <div class="chapter-body">
+
+    <h2>Understand it</h2>
+    <details class="lesson" open>
+      <summary>The concept, explained properly</summary>
+      <p>When you multiply a number repeatedly, only the unit digit of the previous result affects the unit digit of the next. Since there are only 10 possible unit digits, the pattern MUST eventually repeat &mdash; for 2, 3, 7, 8 it repeats every 4 powers. Once you know the cycle, you don't need the actual (huge) power, only where the exponent lands in the cycle.</p>
+    </details>
+
+    <h2>The fast way</h2>
+    <div class="block trick"><span class="tag">Trick</span><p>Find exponent mod (cycle length); use 4 instead of remainder 0; read off that cycle position. Also: HCF &times; LCM = product of the two numbers.</p></div>
+    <div class="block confusion"><span class="tag">Confusion</span><p>Remainders must always be smaller than the divisor &mdash; negative or over-divisor remainders need adjusting back into range.</p></div>
+    <div class="block risk"><span class="tag">Fix</span><p>Warm up by writing the base's first 4 powers on scratch paper once, so the cycle is fresh in memory.</p></div>
+
+    <h2>Worked examples</h2>
+    <div class="worked">
+          <span class="tag">Worked example &mdash; Easy</span>
+          <p>Find the unit digit of 7&sup8;&#8309;.</p>
+          <p>Cycle of 7: 7,9,3,1 (length 4). 85 mod 4 = 1 &rarr; position 1 = <strong>7</strong>.</p>
+        </div>
+
+    <h2>Now you try &mdash; answers hidden</h2>
+    <details class="qa">
+          <summary><span class="q-text">Find the unit digit of 3&sup1;&#8308;&#8308;.</span></summary>
+          <div class="answer">Cycle of 3: 3,9,7,1 (length 4). 144 mod 4 = 0 &rarr; use position 4 = <strong>1</strong>.</div>
+        </details>
+        <details class="qa">
+          <summary><span class="q-text">HCF of two numbers is 12, LCM is 336. One number is 48. Find the other.</span></summary>
+          <div class="answer">Product = HCF&times;LCM = 12&times;336 = 4032. Other number = 4032/48 = <strong>84</strong>.</div>
+        </details>
+
+  </div>
+
+  <div class="pagenav">
+    <a href="si-ci.html">&larr; Previous</a>
+    <a href="index.html">All topics</a>
+    <a href="algebra-quadratics.html">Next &rarr;</a>
+  </div>
+
+<footer>one concept at a time, until it is automatic</footer>
+</div>
+</body>
+</html>

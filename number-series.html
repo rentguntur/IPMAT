@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Number & Letter Series — Ram's IPMAT Learning Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="topnav">
+  <a class="brand" href="index.html">Ram's IPMAT Learning Hub</a>
+  <span class="crumbs"><a href="index.html">Home</a> &rsaquo; Number & Letter Series</span>
+</div>
+
+<div class="wrap">
+  <div class="chapter-band lr-band">
+    <span class="num">Section three</span>
+    <h1>Number & Letter Series</h1>
+  </div>
+  <div class="chapter-body">
+
+    <h2>Understand it</h2>
+    <details class="lesson" open>
+      <summary>The concept, explained properly</summary>
+      <p>Almost all series questions fall into a handful of underlying patterns: constant difference, constant ratio, a difference-of-differences, two interleaved sequences, or squares/cubes with an offset. Checking these in a fixed order turns pattern recognition into a systematic search instead of a lucky guess.</p>
+    </details>
+
+    <h2>The fast way</h2>
+    <div class="block trick"><span class="tag">Trick</span><p>Check in order: constant difference &rarr; constant ratio &rarr; difference-of-differences &rarr; interleaved series &rarr; squares/cubes &plusmn; constant.</p></div>
+    <div class="block confusion"><span class="tag">Confusion</span><p>Two interleaved series (odd/even positions each following their own rule) often get mistaken for one broken pattern.</p></div>
+    <div class="block risk"><span class="tag">Fix</span><p>If the first three differences show no single obvious pattern, test the odd/even split hypothesis immediately.</p></div>
+
+    <h2>Worked examples</h2>
+    <div class="worked">
+          <span class="tag">Worked example &mdash; Easy</span>
+          <p>2, 3, 5, 8, 13, ___</p>
+          <p>Each term = sum of previous two. 8+13 = <strong>21</strong>.</p>
+        </div>
+
+    <h2>Now you try &mdash; answers hidden</h2>
+    <details class="qa">
+          <summary><span class="q-text">Find the next term: 1, 4, 9, 16, 25, ___</span></summary>
+          <div class="answer">Pattern: perfect squares (1&sup2;,2&sup2;,3&sup2;...). Next = 6&sup2; = <strong>36</strong>.</div>
+        </details>
+        <details class="qa">
+          <summary><span class="q-text">Find the next term: 3, 6, 11, 18, 27, ___</span></summary>
+          <div class="answer">Differences: 3,5,7,9 (increasing by 2 each time). Next difference = 11 &rarr; 27+11 = <strong>38</strong>.</div>
+        </details>
+
+  </div>
+
+  <div class="pagenav">
+    <a href="coding-decoding.html">&larr; Previous</a>
+    <a href="index.html">All topics</a>
+    <a href="index.html">Next &rarr;</a>
+  </div>
+
+<footer>one concept at a time, until it is automatic</footer>
+</div>
+</body>
+</html>

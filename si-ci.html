@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple & Compound Interest — Ram's IPMAT Learning Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="topnav">
+  <a class="brand" href="index.html">Ram's IPMAT Learning Hub</a>
+  <span class="crumbs"><a href="index.html">Home</a> &rsaquo; Simple & Compound Interest</span>
+</div>
+
+<div class="wrap">
+  <div class="chapter-band quant-band">
+    <span class="num">Section one</span>
+    <h1>Simple & Compound Interest</h1>
+  </div>
+  <div class="chapter-body">
+
+    <h2>Understand it</h2>
+    <details class="lesson" open>
+      <summary>The concept, explained properly</summary>
+      <p>Simple interest is calculated on the original principal every time. Compound interest adds each period's interest back into the principal, so the next period's interest is on a slightly bigger amount &mdash; that &ldquo;interest on interest&rdquo; is what makes CI outgrow SI, and the gap widens over time.</p>
+          <p>For exactly 2 years, that extra amount equals P&times;(R/100)&sup2; &mdash; a shortcut from expanding the CI formula, so you skip computing full CI when only the difference is asked.</p>
+    </details>
+
+    <h2>The fast way</h2>
+    <div class="block trick"><span class="tag">Trick</span><p>&ldquo;Compounded half-yearly&rdquo; means double T and halve R before applying the formula.</p></div>
+    <div class="block confusion"><span class="tag">Confusion</span><p>Applying the annual rate directly when compounding isn't annual &mdash; a very common trap.</p></div>
+    <div class="block risk"><span class="tag">Fix</span><p>Rewrite R and T adjusted for compounding frequency before touching the formula.</p></div>
+
+    <h2>Worked examples</h2>
+    <div class="worked">
+          <span class="tag">Worked example &mdash; Easy</span>
+          <p>Find CI &minus; SI on &#8377;8000 for 2 years at 5% p.a.</p>
+          <p>8000 &times; (5/100)&sup2; = 8000 &times; 0.0025 = <strong>&#8377;20</strong>.</p>
+        </div>
+
+    <h2>Now you try &mdash; answers hidden</h2>
+    <details class="qa">
+          <summary><span class="q-text">Find the CI on &#8377;10,000 for 2 years at 10% p.a., compounded annually.</span></summary>
+          <div class="answer">Year 1: 10,000&times;1.10=11,000. Year 2: 11,000&times;1.10=12,100. CI = 12,100&minus;10,000 = <strong>&#8377;2,100</strong>.</div>
+        </details>
+        <details class="qa">
+          <summary><span class="q-text">&#8377;5000 is invested at 8% p.a. compounded half-yearly for 1 year. Find the amount.</span></summary>
+          <div class="answer">Half-yearly: R=4%, T=2 periods. Amount = 5000&times;1.04&sup2; = 5000&times;1.0816 = <strong>&#8377;5,408</strong>.</div>
+        </details>
+
+  </div>
+
+  <div class="pagenav">
+    <a href="time-work.html">&larr; Previous</a>
+    <a href="index.html">All topics</a>
+    <a href="number-system.html">Next &rarr;</a>
+  </div>
+
+<footer>one concept at a time, until it is automatic</footer>
+</div>
+</body>
+</html>
