@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drill — Sandeep's IPMAT Learning Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+<div class="topnav">
+  <a class="brand" href="index.html">Sandeep's IPMAT Learning Hub</a>
+  <span class="crumbs"><a href="index.html">Home</a> &rsaquo; Drill</span>
+</div>
+
+<div class="wrap">
+  <div class="chapter-band meta-band">
+    <span class="num">Practice &amp; progress</span>
+    <h1>Timed Drill</h1>
+  </div>
+  <div class="chapter-body">
+
+    <div id="gate" class="signin-gate" hidden>
+      <p>Sign in to sync your drill results across devices.</p>
+    </div>
+
+    <div id="picker">
+      <h2>Pick a topic</h2>
+      <div class="topic-grid" id="topic-grid"></div>
+    </div>
+
+    <div id="session" hidden>
+      <div class="drill-card">
+        <div class="drill-timer" id="timer">0s</div>
+        <p class="drill-question" id="q-text"></p>
+        <div class="drill-actions" id="reveal-actions">
+          <button class="btn btn-primary" id="reveal-btn">Reveal answer</button>
+        </div>
+        <div class="drill-answer" id="answer-box" hidden></div>
+        <div class="drill-actions" id="grade-actions" hidden>
+          <button class="btn btn-correct" id="right-btn">Got it right</button>
+          <button class="btn btn-wrong" id="wrong-btn">Got it wrong</button>
+        </div>
+        <div id="reason-box" hidden>
+          <p style="text-align:center; margin-top:14px; font-size:0.9rem;">Why?</p>
+          <div class="reason-tags">
+            <span class="reason-tag" data-reason="concept-gap">Concept gap</span>
+            <span class="reason-tag" data-reason="calc-slip">Calc slip</span>
+            <span class="reason-tag" data-reason="misread">Misread</span>
+            <span class="reason-tag" data-reason="time-pressure">Time pressure</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="summary" hidden>
+      <div class="drill-card session-summary">
+        <p class="big-stat" id="acc-stat">-</p>
+        <p>accuracy this session</p>
+        <p id="avg-time" style="color:#5c6353;"></p>
+        <div class="drill-actions" style="margin-top:20px;">
+          <a class="btn btn-primary" href="dashboard.html" style="text-decoration:none;">View dashboard</a>
+          <button class="btn" id="again-btn" style="background:var(--line);">Drill again</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pagenav">
+    <a href="index.html">&larr; All topics</a>
+    <a href="dashboard.html">Dashboard &rarr;</a>
+  </div>
+
+<footer>accuracy first, speed follows</footer>
+</div>
+
+<script src="app.js"></script>
+<script>
+const SESSION_SIZE = 10;
+let data = null;
+let queue = [], current = null, sessionId = null, timerHandle = null, startTime = null, results = [];
+
+function renderTopicGrid() {
+  const grid = document.getElementById("topic-grid");
+  grid.innerHTML = "";
+  IPMAT.topics.forEach((t) => {
+    const card = document.createElement("a");
+    card.className = "topic-card";
+    card.href = "#";
+    card.innerHTML = `<p class="t-name">${t.name}</p><p class="t-desc">${t.questions.length} questions in bank</p>`;
+    card.onclick = (e) => { e.preventDefault(); startSession(t.id); };
+    grid.appendChild(card);
+  });
+}
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startSession(topicId) {
+  const topic = IPMAT.getTopic(topicId);
+  sessionId = `${topicId}-${Date.now()}`;
+  queue = shuffle(topic.questions).slice(0, Math.min(SESSION_SIZE, topic.questions.length));
+  queue = queue.map((q) => ({ ...q, topic: topicId }));
+  results = [];
+  document.getElementById("picker").hidden = true;
+  document.getElementById("session").hidden = false;
+  document.getElementById("summary").hidden = true;
+  nextQuestion();
+}
+
+function nextQuestion() {
+  if (queue.length === 0) return endSession();
+  current = queue.shift();
+  document.getElementById("q-text").textContent = current.q;
+  document.getElementById("answer-box").hidden = true;
+  document.getElementById("answer-box").textContent = "";
+  document.getElementById("reveal-actions").hidden = false;
+  document.getElementById("grade-actions").hidden = true;
+  document.getElementById("reason-box").hidden = true;
+  startTime = Date.now();
+  clearInterval(timerHandle);
+  timerHandle = setInterval(() => {
+    document.getElementById("timer").textContent = `${Math.floor((Date.now() - startTime) / 1000)}s`;
+  }, 250);
+}
+
+document.getElementById("reveal-btn").onclick = () => {
+  document.getElementById("answer-box").hidden = false;
+  document.getElementById("answer-box").textContent = current.a;
+  document.getElementById("reveal-actions").hidden = true;
+  document.getElementById("grade-actions").hidden = false;
+};
+
+function recordAttempt(correct, reason) {
+  clearInterval(timerHandle);
+  const timeSec = Math.round((Date.now() - startTime) / 1000);
+  results.push({
+    id: `${sessionId}-${results.length}`,
+    sessionId, topic: current.topic, question: current.q,
+    correct, timeSec, reason: reason || null,
+    ts: new Date().toISOString(),
+  });
+  nextQuestion();
+}
+
+document.getElementById("right-btn").onclick = () => recordAttempt(true);
+document.getElementById("wrong-btn").onclick = () => {
+  document.getElementById("grade-actions").hidden = true;
+  document.getElementById("reason-box").hidden = false;
+};
+document.querySelectorAll(".reason-tag").forEach((tag) => {
+  tag.onclick = () => recordAttempt(false, tag.dataset.reason);
+});
+
+async function endSession() {
+  document.getElementById("session").hidden = true;
+  document.getElementById("summary").hidden = false;
+  const correctCount = results.filter((r) => r.correct).length;
+  const acc = results.length ? Math.round((correctCount / results.length) * 100) : 0;
+  const avgTime = results.length
+    ? Math.round(results.reduce((s, r) => s + r.timeSec, 0) / results.length)
+    : 0;
+  document.getElementById("acc-stat").textContent = `${acc}%`;
+  document.getElementById("avg-time").textContent = `avg ${avgTime}s per question`;
+
+  data.attempts.push(...results);
+  results.filter((r) => !r.correct).forEach((r) => {
+    data.errorLog.push({
+      id: r.id, topic: r.topic, question: r.question,
+      reason: r.reason, ts: r.ts,
+    });
+  });
+  const topicId = results[0] && results[0].topic;
+  if (topicId) data.mastery[topicId] = IPMAT.computeMastery(data.attempts, topicId);
+
+  if (IPMAT.isSignedIn()) {
+    try { await IPMAT.saveData(data); } catch (e) { console.warn("Save failed", e); }
+  }
+}
+
+document.getElementById("again-btn").onclick = () => {
+  document.getElementById("summary").hidden = true;
+  document.getElementById("picker").hidden = false;
+};
+
+async function onAuthChange(signedIn) {
+  document.getElementById("gate").hidden = signedIn;
+  data = signedIn ? await IPMAT.loadData() : IPMAT.emptyData();
+}
+
+function init() {
+  data = IPMAT.emptyData();
+  IPMAT.mountAuthControl(onAuthChange);
+  renderTopicGrid();
+}
+init();
+</script>
+</body>
+</html>

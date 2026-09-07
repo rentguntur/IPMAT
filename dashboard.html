@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Sandeep's IPMAT Learning Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+<div class="topnav">
+  <a class="brand" href="index.html">Sandeep's IPMAT Learning Hub</a>
+  <span class="crumbs"><a href="index.html">Home</a> &rsaquo; Dashboard</span>
+</div>
+
+<div class="wrap">
+  <div class="chapter-band meta-band">
+    <span class="num">Practice &amp; progress</span>
+    <h1>Dashboard</h1>
+  </div>
+  <div class="chapter-body">
+
+    <div id="gate" class="signin-gate" hidden>
+      <p>Sign in to see your synced progress.</p>
+    </div>
+
+    <div id="content" hidden>
+      <h2>Topic mastery</h2>
+      <div id="topic-rows"></div>
+
+      <h2>This week</h2>
+      <div class="drill-card">
+        <p id="week-summary"></p>
+        <p id="top-errors" style="margin-top:10px; color:#5c6353;"></p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pagenav">
+    <a href="drill.html">&larr; Drill</a>
+    <a href="index.html">All topics</a>
+    <a href="errorlog.html">Error log &rarr;</a>
+  </div>
+
+<footer>numbers, not vibes</footer>
+</div>
+
+<script src="app.js"></script>
+<script>
+function statusLabel(status) {
+  if (status === "mastered") return "Mastered";
+  if (status === "in-progress") return "In progress";
+  return "Not started";
+}
+
+function render(data) {
+  const rowsEl = document.getElementById("topic-rows");
+  rowsEl.innerHTML = "";
+  IPMAT.topics.forEach((t) => {
+    const m = IPMAT.computeMastery(data.attempts, t.id);
+    const row = document.createElement("div");
+    row.className = "dash-row";
+    const accText = m.accuracy === null ? "no attempts yet" : `${Math.round(m.accuracy * 100)}% last session`;
+    row.innerHTML = `
+      <div>
+        <div class="dash-topic">${t.name}</div>
+        <div class="dash-meta">${accText}</div>
+      </div>
+      <span class="status-badge status-${m.status}">${statusLabel(m.status)}</span>
+    `;
+    rowsEl.appendChild(row);
+  });
+
+  const weekAgo = Date.now() - 7 * 24 * 3600 * 1000;
+  const weekAttempts = data.attempts.filter((a) => new Date(a.ts).getTime() >= weekAgo);
+  const masteredThisWeek = IPMAT.topics.filter((t) => {
+    const m = IPMAT.computeMastery(data.attempts, t.id);
+    if (m.status !== "mastered") return false;
+    const lastAttempt = data.attempts.filter((a) => a.topic === t.id).slice(-1)[0];
+    return lastAttempt && new Date(lastAttempt.ts).getTime() >= weekAgo;
+  });
+  document.getElementById("week-summary").textContent =
+    `${weekAttempts.length} questions drilled, ${masteredThisWeek.length} topic(s) newly mastered.`;
+
+  const reasonCounts = {};
+  data.errorLog.forEach((e) => {
+    if (!e.reason) return;
+    reasonCounts[e.reason] = (reasonCounts[e.reason] || 0) + 1;
+  });
+  const top = Object.entries(reasonCounts).sort((a, b) => b[1] - a[1]).slice(0, 2);
+  document.getElementById("top-errors").textContent = top.length
+    ? `Top recurring error patterns: ${top.map(([r, c]) => `${r} (${c})`).join(", ")}.`
+    : "No error patterns logged yet.";
+}
+
+async function onAuthChange(signedIn) {
+  document.getElementById("gate").hidden = signedIn;
+  document.getElementById("content").hidden = !signedIn;
+  if (signedIn) render(await IPMAT.loadData());
+}
+
+IPMAT.mountAuthControl(onAuthChange);
+</script>
+</body>
+</html>

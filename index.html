@@ -3,20 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home — Ram's IPMAT Learning Hub</title>
+<title>Home — Sandeep's IPMAT Learning Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
 <div class="topnav">
-  <a class="brand" href="index.html">Ram's IPMAT Learning Hub</a>
+  <a class="brand" href="index.html">Sandeep's IPMAT Learning Hub</a>
   <span class="crumbs"></span>
 </div>
 
 <div class="wrap">
   <header class="hero">
-    <p class="kicker">Ram's own prep space</p>
+    <p class="kicker">Sandeep's own prep space</p>
     <h1>The IPMAT Learning Hub</h1>
     <p>One page per concept. Each one starts with a full "understand it" lesson, then the fast trick, the common confusion, worked examples, and questions with the answer hidden until you check.</p>
   </header>
@@ -30,6 +31,34 @@
       <li>Attempt the practice questions cold before checking the hidden answer.</li>
       <li>Only move to the next topic once this one feels automatic.</li>
     </ol>
+  </div>
+
+  <div class="category-block">
+    <h2 class="category-title">Mentor track</h2>
+    <div class="topic-grid">
+      <a class="topic-card" href="daily-plan.html" style="border-left-color:#5a8a6b;">
+        <p class="t-name">Daily Plan &amp; Speed Tactics</p>
+        <p class="t-desc">Exam mechanics, the four-phase system, error log, and free resources.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="category-block">
+    <h2 class="category-title">Practice &amp; progress</h2>
+    <div class="topic-grid">
+      <a class="topic-card" href="drill.html" style="border-left-color:#2f6f8f;">
+        <p class="t-name">Timed Drill</p>
+        <p class="t-desc">Real timed questions, self-graded, synced to your account.</p>
+      </a>
+      <a class="topic-card" href="dashboard.html" style="border-left-color:#2f6f8f;">
+        <p class="t-name">Dashboard</p>
+        <p class="t-desc">Mastery status per topic, accuracy trend, weekly summary.</p>
+      </a>
+      <a class="topic-card" href="errorlog.html" style="border-left-color:#2f6f8f;">
+        <p class="t-name">Error Log</p>
+        <p class="t-desc">Every wrong answer, tagged by why, pulled automatically from drills.</p>
+      </a>
+    </div>
   </div>
 
   <div class="category-block">
@@ -131,5 +160,7 @@
 
 <footer>built topic by topic, for the version of you sitting the actual exam</footer>
 </div>
+<script src="app.js"></script>
+<script>IPMAT.mountAuthControl();</script>
 </body>
 </html>

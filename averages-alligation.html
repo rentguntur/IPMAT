@@ -3,14 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Averages, Mixtures & Alligation — Ram's IPMAT Learning Hub</title>
+<title>Averages, Mixtures & Alligation — Sandeep's IPMAT Learning Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
 <div class="topnav">
-  <a class="brand" href="index.html">Ram's IPMAT Learning Hub</a>
+  <a class="brand" href="index.html">Sandeep's IPMAT Learning Hub</a>
   <span class="crumbs"><a href="index.html">Home</a> &rsaquo; Averages, Mixtures & Alligation</span>
 </div>
 
@@ -33,13 +34,21 @@
     <h2>The fast way</h2>
     <div class="block trick"><span class="tag">Trick</span><p>Draw the alligation as a literal cross: a and b on the left ends, m in the middle, differences read diagonally.</p></div>
     <div class="block confusion"><span class="tag">Confusion</span><p>Students often flip which quantity goes with which gap &mdash; remember it's always the FAR gap that pairs with a given item.</p></div>
-    <div class="block risk"><span class="tag">Fix</span><p>Before reaching for alligation, check: one-time mix, or repeated replacement? Pick the matching tool.</p></div>
+    <div class="block confusion"><span class="tag">The repeated-replacement trap</span><p>Alligation only works for a <em>one-time</em> mix. If a container is repeatedly drained and refilled (e.g. "20L removed and replaced with water, done 3 times"), alligation does NOT apply &mdash; each repetition acts on an already-diluted mixture, not the original. That needs the exponential formula instead:</p>
+        <strong class="formula">Final quantity = Initial &times; (1 &minus; replaced/total)<sup>n</sup></strong>
+        <p>Confusing these two is the single most common mistake on this topic.</p></div>
+    <div class="block risk"><span class="tag">Fix</span><p>Before reaching for alligation, ask: &ldquo;does this happen once, or does it repeat?&rdquo; One-time mix &rarr; alligation cross. Repeated process &rarr; the exponential formula.</p></div>
 
     <h2>Worked examples</h2>
     <div class="worked">
           <span class="tag">Worked example &mdash; Easy</span>
           <p>Mix &#8377;40/kg rice with &#8377;60/kg rice to get &#8377;52/kg. Ratio?</p>
           <p>(60&minus;52):(52&minus;40) = 8:12 = <strong>2:3</strong> (cheaper:dearer). Check: (2&times;40+3&times;60)/5 = 52 &#10003;</p>
+        </div>
+    <div class="worked">
+          <span class="tag">Worked example &mdash; Hard &mdash; repeated replacement</span>
+          <p>A container has 80L of milk. 20L is removed and replaced with water. Repeated twice more (3 times total). Final milk left?</p>
+          <p>Fraction retained each time = (80&minus;20)/80 = 3/4. Final milk = 80 &times; (3/4)<sup>3</sup> = 80 &times; 27/64 = <strong>33.75L</strong>. Notice this is NOT 80&minus;60=20 &mdash; each removal takes out a mix of milk and water, not pure milk, which is exactly why it compounds instead of subtracting linearly.</p>
         </div>
 
     <h2>Now you try &mdash; answers hidden</h2>
@@ -50,6 +59,10 @@
         <details class="qa">
           <summary><span class="q-text">A vessel has milk worth 25 marks on some scale, another has 40. Mixed to get 30. Ratio of quantities?</span></summary>
           <div class="answer">(40&minus;30):(30&minus;25) = 10:5 = <strong>2:1</strong>.</div>
+        </details>
+        <details class="qa">
+          <summary><span class="q-text">A tank has 100L of pure milk. 10L is drawn out and replaced with water, done twice more (3 operations total). Final quantity of milk?</span></summary>
+          <div class="answer">Fraction retained each time = (100&minus;10)/100 = 9/10. Final milk = 100 &times; (9/10)<sup>3</sup> = 100 &times; 729/1000 = <strong>72.9L</strong>.</div>
         </details>
 
   </div>
@@ -62,5 +75,7 @@
 
 <footer>one concept at a time, until it is automatic</footer>
 </div>
+<script src="app.js"></script>
+<script>IPMAT.mountAuthControl();</script>
 </body>
 </html>

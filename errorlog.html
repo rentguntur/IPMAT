@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Error Log — Sandeep's IPMAT Learning Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+<div class="topnav">
+  <a class="brand" href="index.html">Sandeep's IPMAT Learning Hub</a>
+  <span class="crumbs"><a href="index.html">Home</a> &rsaquo; Error Log</span>
+</div>
+
+<div class="wrap">
+  <div class="chapter-band meta-band">
+    <span class="num">Practice &amp; progress</span>
+    <h1>Error Log</h1>
+  </div>
+  <div class="chapter-body">
+
+    <div id="gate" class="signin-gate" hidden>
+      <p>Sign in to see your synced error log.</p>
+    </div>
+
+    <div id="content" hidden>
+      <div class="drill-actions" style="justify-content:flex-start; margin-bottom:16px;">
+        <select id="topic-filter" class="btn" style="background:var(--card); border:1px solid var(--line);">
+          <option value="">All topics</option>
+        </select>
+      </div>
+      <div id="entries"></div>
+      <p id="empty-msg" style="display:none; color:#5c6353;">No wrong answers logged yet — drill a topic to start building this.</p>
+    </div>
+
+  </div>
+
+  <div class="pagenav">
+    <a href="dashboard.html">&larr; Dashboard</a>
+    <a href="index.html">All topics</a>
+    <a href="drill.html">Drill &rarr;</a>
+  </div>
+
+<footer>every mistake is a lesson, once</footer>
+</div>
+
+<script src="app.js"></script>
+<script>
+let allEntries = [];
+
+function topicName(id) {
+  const t = IPMAT.getTopic(id);
+  return t ? t.name : id;
+}
+
+function renderEntries(filterTopic) {
+  const el = document.getElementById("entries");
+  el.innerHTML = "";
+  const entries = allEntries
+    .filter((e) => !filterTopic || e.topic === filterTopic)
+    .slice()
+    .reverse();
+  document.getElementById("empty-msg").style.display = entries.length ? "none" : "block";
+  entries.forEach((e) => {
+    const div = document.createElement("div");
+    div.className = "errlog-entry";
+    div.innerHTML = `
+      <div class="topic-tag">${topicName(e.topic)}</div>
+      <p>${e.question}</p>
+      <div class="reason">${e.reason ? e.reason.replace("-", " ") : "no reason tagged"} — ${new Date(e.ts).toLocaleDateString()}</div>
+    `;
+    el.appendChild(div);
+  });
+}
+
+function populateFilter() {
+  const sel = document.getElementById("topic-filter");
+  IPMAT.topics.forEach((t) => {
+    const opt = document.createElement("option");
+    opt.value = t.id;
+    opt.textContent = t.name;
+    sel.appendChild(opt);
+  });
+  sel.onchange = () => renderEntries(sel.value);
+}
+
+async function onAuthChange(signedIn) {
+  document.getElementById("gate").hidden = signedIn;
+  document.getElementById("content").hidden = !signedIn;
+  if (signedIn) {
+    const data = await IPMAT.loadData();
+    allEntries = data.errorLog;
+    populateFilter();
+    renderEntries("");
+  }
+}
+
+IPMAT.mountAuthControl(onAuthChange);
+</script>
+</body>
+</html>
